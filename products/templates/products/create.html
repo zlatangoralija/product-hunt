@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <h2>Create new product</h2>
+    </div>
+    {% if error %}
+        <div class="row">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-sm-12">
+            <form method="POST" action="{% url 'create' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Title</label>
+                        <input type="text" class="form-control" name="title" aria-describedby="emailHelp" placeholder="Enter title">
+                    </div>
+                </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Url</label>
+                            <input type="text" class="form-control" name="url" aria-describedby="emailHelp" placeholder="Enter username">
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Body</label>
+                            <input type="textbox" class="form-control" name="body" aria-describedby="emailHelp" placeholder="Enter username">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Icon</label>
+                            <input type="file" class="form-control" name="icon" aria-describedby="emailHelp" placeholder="Enter username">
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Image</label>
+                            <input type="file" class="form-control" name="image" aria-describedby="emailHelp" placeholder="Enter username">
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
