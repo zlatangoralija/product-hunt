@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .models import Product
+from django.contrib import messages
+from .models import Product, VoteUser
 from django.utils import timezone
 
 # Create your views here.
@@ -41,6 +42,22 @@ def detail(request, product_id):
 @login_required(login_url="/accounts/login/")
 def upvote(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    product.votes_total += 1
-    product.save()
+    try:
+        productVote = VoteUser.objects.get(product_id=product.id, user_id=request.user.id)
+    except VoteUser.DoesNotExist:
+        productVote = None
+
+    if productVote is None:
+        product.votes_total += 1
+        product.save()
+
+        productVote = VoteUser()
+        productVote.user_id = request.user.id
+        productVote.product_id = product.id
+        productVote.vote_date = timezone.datetime.now()
+        productVote.save()
+    else:
+        messages.error(request, 'You already voted for this product!')
+        return redirect('/products/' + str(product.id))
+
     return redirect('/products/' + str(product.id))

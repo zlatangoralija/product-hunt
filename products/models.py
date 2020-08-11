@@ -21,4 +21,8 @@ class Product(models.Model):
     def summary(self):
         return self.body[:100]
 
+class VoteUser(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    vote_date = models.DateField()
 

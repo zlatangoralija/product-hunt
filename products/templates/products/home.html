@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% if error %}
+        <div class="row">
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
     <div style="margin-top: 100px;"></div>
     {% for product in  products %}
         <div class="row pt-5 pb-5">
